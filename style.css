@@ -34,11 +34,7 @@ Version: 1.0.1
 }
 .mos-button{text-decoration: none;} 
 .mos-prev-button {margin-right: 5px;}
-.woocommerce ul.products li.product .desc {
-    border: 1px solid #eaeaea;
-    margin-top: 10px;
-    text-align: center;
-}
+
 .login * {
     margin: 0;
     padding: 0;
