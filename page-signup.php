@@ -62,7 +62,7 @@ if (isset( $_POST['custom_register_field'] ) && wp_verify_nonce( $_POST['custom_
             </p>
             <?php wp_nonce_field( 'custom_register_action', 'custom_register_field' ); ?>
         </form>
-        <div class="text-center">Already have an account? <a href="<php echo wp_login_url()?>">Login</a></div>
+        <div class="text-center">Already have an account? <a href="<?php echo wp_login_url()?>">Login</a></div>
     </div>
     <?php wp_footer(); ?>
 </body>
