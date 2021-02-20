@@ -1,0 +1,127 @@
+/*
+Theme Name: Betheme Child
+Theme URI: http://www.mostakshahid.com
+Author: Md. Mostak Shahid
+Author URI: http://www.mostakshahid.com
+Description: Child Theme for Betheme
+Template: betheme
+Version: 1.0.1
+*/
+.mb-15{margin-bottom: 15px;}
+.text-left{
+    text-align: left;
+}
+.text-right{
+    text-align: right;
+}
+.text-center{
+    text-align: center;
+}
+.generation-button-group a {
+    background-color: #eb3c70;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid  #eb3c70;
+}
+.generation-button-group a + a {
+    margin-left: 5px;
+}
+.generation-button-group a.active{
+    background-color: transparent;
+    color: #eb3c70;
+}
+.mos-button{text-decoration: none;} 
+.mos-prev-button {margin-right: 5px;}
+.woocommerce ul.products li.product .desc {
+    border: 1px solid #eaeaea;
+    margin-top: 10px;
+    text-align: center;
+}
+.login * {
+    margin: 0;
+    padding: 0;
+}
+.login-logo-wrapper{text-align: center;}
+.login-logo-wrapper img{max-width: 100%;height: auto}
+#login {
+    width: 100%;
+    max-width: 320px;
+    padding: 8% 0 0;
+    margin: auto;
+}
+.login form {
+    margin-top: 20px;
+    margin-left: 0;
+    padding: 26px 24px 46px;
+    font-weight: 400;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 4%);
+}
+.login input[type="date"],
+.login input[type="email"],
+.login input[type="number"],
+.login input[type="password"],
+.login input[type="search"],
+.login input[type="tel"],
+.login input[type="text"],
+.login input[type="url"],
+.login select,
+.login textarea {
+    width: 100%;
+}
+.login .submit .button{
+    background-color: #7f7f7f;
+    color: #fff;
+    padding: 10px 35px;
+    border-radius: 50px;
+    display: inline-block;
+    position: relative;
+    border-color: #7f7f7f;
+}
+.login .submit .button:hover{
+    background-color: #eb3c70;
+    border-color: #eb3c70;
+}
+.d-flex {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+}
+.flex-fill {
+    flex: 1 1 auto!important;
+}
+.d-table {
+    display: table;
+    width: 100%;
+}
+.d-table-cell{
+    display: table-cell;
+}
+.woocommerce-generation-table th, .woocommerce-generation-table td{text-align: left;}
+@media screen and (max-width: 768px) {
+    .generation-button-group{
+        display: block!important;
+    }
+    .generation-button-group a,.generation-button-group a + a {
+        display: block;
+        width: 100%;
+        margin-left: 0;
+        box-sizing: border-box;
+        margin-bottom: 5px;
+    }
+    .woocommerce table.shop_table_responsive tr:nth-child(odd), 
+    .woocommerce-page table.shop_table_responsive tr:nth-child(odd){
+        background-color: #eaeaea;
+    }
+}
+@media screen and (max-height: 550px) {
+    #login {
+        padding: 20px 0;
+    }
+}
