@@ -26,7 +26,8 @@ function crb_attach_theme_options() {
     Container::make( 'user_meta', 'Additional Detals' )
         ->add_fields( array(
             // Field::make( 'text', 'mos_user_referal_code', 'Your Referral Code' ),
-            Field::make( 'hidden', 'mos_user_parent', __( 'Parent ID' ) )
+            Field::make( 'hidden', 'mos_user_parent', __( 'Parent ID' ) ),
+            Field::make( 'text', 'mos_user_transaction_code', __( 'Transaction Code' ) ),
         ));
     
 }

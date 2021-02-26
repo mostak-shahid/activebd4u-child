@@ -26,6 +26,7 @@ if (isset( $_POST['custom_register_field'] ) && wp_verify_nonce( $_POST['custom_
                 $parent_id = $wpdb->get_var( "SELECT ID FROM {$wpdb->prefix}users WHERE user_login='{$_POST['user_code']}'" );
                 if ($parent_id) update_user_meta($user_id,'_mos_user_parent',$parent_id);
             }
+            update_user_meta($user_id,'_mos_user_transaction_code','123456789');
             wp_redirect( wp_login_url() );
         } else {
             $emailErr = 'User already exists.';
