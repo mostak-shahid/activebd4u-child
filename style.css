@@ -5,7 +5,7 @@ Author: Md. Mostak Shahid
 Author URI: http://www.mostakshahid.com
 Description: Child Theme for Betheme
 Template: betheme
-Version: 1.0.4
+Version: 1.0.5
 */
 .mb-15{margin-bottom: 15px;}
 .text-left{
@@ -114,6 +114,14 @@ Version: 1.0.4
     .woocommerce table.shop_table_responsive tr:nth-child(odd), 
     .woocommerce-page table.shop_table_responsive tr:nth-child(odd){
         background-color: #eaeaea;
+    }
+    .with_aside .content_wrapper{
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+        flex-direction:column-reverse;
     }
 }
 @media screen and (max-height: 550px) {

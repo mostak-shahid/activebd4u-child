@@ -352,3 +352,22 @@ array(5) {
 }
 
 add_action( 'woocommerce_order_status_completed', 'mysite_woocommerce_order_status_completed', 10, 1 );
+
+/**
+*  Add custom handling fee to an order 
+*/
+function pt_add_handling_fee() {
+    global $woocommerce;
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+        return;
+    if ($woocommerce->cart->subtotal>=2000){
+        $fee = 0.00;
+    } else {
+        $fee = 50.00;
+    }
+    $title = 'Delivery Charge';
+    $woocommerce->cart->add_fee( $title, $fee, TRUE, 'standard' );
+}
+ 
+// Action -> Add custom handling fee to an order
+add_action( 'woocommerce_cart_calculate_fees', 'pt_add_handling_fee' );

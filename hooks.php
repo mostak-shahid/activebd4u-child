@@ -343,3 +343,14 @@ function mos_wallet_datatable() {
         <?php
     }
 }
+add_action( 'wpo_wcpdf_after_order_data', 'wpo_wcpdf_delivery_date', 10, 2 );
+function wpo_wcpdf_delivery_date ($template_type, $order) {
+    
+    ?>
+    <tr class="delivery-date">
+        <th>Phone Number:</th>
+        <td><?php echo $order->get_billing_phone(); ?></td>
+    </tr>
+    <?php
+    
+}
