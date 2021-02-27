@@ -54,7 +54,20 @@ function mos_enqueue_styles()
 add_action('wp_enqueue_scripts', 'mos_enqueue_styles', 101);
 function mos_admin_styles()
 {
-	wp_enqueue_style('style', get_stylesheet_directory_uri() .'/css/admin-css.css');    
+	wp_enqueue_style('style', get_stylesheet_directory_uri() .'/css/admin-css.css');     
+	wp_enqueue_style('jquery.dataTables.min', 'https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css'); 
+    wp_enqueue_script('jquery.dataTables.min', 'https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js', 'jquery');  
+    
+    
+    wp_enqueue_script('dataTables.buttons.min', get_stylesheet_directory_uri() . '/plugins/datatables-buttons/js/dataTables.buttons.min.js', 'jquery');
+    wp_enqueue_script('jszip.min', get_stylesheet_directory_uri() . '/plugins/jszip/jszip.min.js', 'jquery');
+    wp_enqueue_script('pdfmake.min', get_stylesheet_directory_uri() . '/plugins/pdfmake/pdfmake.min.js', 'jquery');
+    wp_enqueue_script('vfs_fonts', get_stylesheet_directory_uri() . '/plugins/pdfmake/vfs_fonts.js', 'jquery');
+    wp_enqueue_script('buttons.html5.min', get_stylesheet_directory_uri() . '/plugins/datatables-buttons/js/buttons.html5.min.js', 'jquery');
+    wp_enqueue_script('buttons.print.min', get_stylesheet_directory_uri() . '/plugins/datatables-buttons/js/buttons.print.min.js', 'jquery');
+    wp_enqueue_script('buttons.colVis.min', get_stylesheet_directory_uri() . '/plugins/datatables-buttons/js/buttons.colVis.min.js', 'jquery');
+    wp_enqueue_script('dataTables.responsive.min', get_stylesheet_directory_uri() . '/plugins/datatables-responsive/js/dataTables.responsive.min.js', 'jquery');
+    
 }
 add_action('admin_enqueue_scripts', 'mos_admin_styles', 101);
 /**

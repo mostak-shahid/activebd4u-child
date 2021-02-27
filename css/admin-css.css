@@ -1,3 +1,14 @@
 .cf-field.cf-hidden {
     display: none;
 }
+#example_wrapper{background-color: #ffffff;padding-top: 10px;padding-bottom: 10px;}
+#example_wrapper .dt-buttons {text-align: center;}
+#example_wrapper .dt-buttons,#example_wrapper .dataTables_length,#example_wrapper .dataTables_filter{margin-bottom: 10px;width: 33.33333333%;float: left;}
+.d-flex {display: flex!important;}
+.align-items-center {align-items: center!important;}
+.justify-content-between {justify-content: space-between!important;}
+.mb-10{margin-bottom: 10px;}
+table.dataTable thead th{padding-left: 10px!important;padding-right: 10px!important;}
+#example.widefat th input {margin: 0important;}
+.text-left{text-align: left;}
+.text-right{text-align: right;}

@@ -13,69 +13,7 @@ function admin_moswallet_page(){
     ); 
 }
 
-add_action( 'admin_menu', 'admin_moswallet_page' );
-function moswallet_page(){
-	?>
-	<div class="wrap">
-		<h1>Wallet Box</h1>
-		<?php        
-        global $wpdb;    
-        $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $limit = (@$_GET['limit'] AND $_GET['limit'] > 0)?$_GET['limit']:1;
-        $data_start = (intval($limit)-1) * 10;
-        //user_id={$user_id} AND after where
-        $query = "SELECT umeta_id, user_id, meta_value FROM {$wpdb->prefix}usermeta WHERE meta_key LIKE '%referal_income_from_%' OR meta_key LIKE '%cash_widraw%' ORDER BY umeta_id DESC LIMIT {$data_start},10";
-        $data = $wpdb->get_results($query);
-        if ($data) {
 
-            echo '<table class="woocommerce-generation-table woocommerce-MyAccount-generations shop_table shop_table_responsive my_account_generations account-generations-table">';
-                echo '<thead>';
-                    echo '<tr>';
-                        echo '<th class="woocommerce-generations-table__header"><span class="nobr">Date</span></th>';
-                        echo '<th class="woocommerce-generations-table__header"><span class="nobr">User</span></th>';
-                        echo '<th class="woocommerce-generations-table__header"><span class="nobr">Type</span></th>';
-                        echo '<th class="woocommerce-generations-table__header"><span class="nobr">Amount</span></th>';
-                        echo '<th class="woocommerce-generations-table__header"><span class="nobr">Status</span></th>';
-                        echo '<th class="woocommerce-generations-table__header"><span class="nobr">Action</span></th>';
-                    echo '</tr>';
-                echo '</thead>';
-                echo '<tbody>';
-
-                    foreach($data as $value) {
-                        $val =  maybe_unserialize($value->meta_value);
-                        $user_info = get_userdata($value->user_id);
-                        $type = ($val['amount']>0)?'Cashin':'Cashout';
-                        echo '<tr class="woocommerce-generations-table__row woocommerce-generations-table__row--status-processing generation">';
-                            echo '<td class="woocommerce-generations-table__cell woocommerce-generations-table__cell-generation-number" data-title="Date">'.$val['date'].'</td>';
-                            echo '<td class="woocommerce-generations-table__cell woocommerce-generations-table__cell-generation-number" data-title="User">'.$user_info->user_login.'</td>';
-                            echo '<td class="woocommerce-generations-table__cell woocommerce-generations-table__cell-generation-number" data-title="Type">'.$type.'</td>';
-                            echo '<td class="woocommerce-generations-table__cell woocommerce-generations-table__cell-generation-number" data-title="Amount">'.$val['amount'].'</td>';
-                            echo '<td class="woocommerce-generations-table__cell woocommerce-generations-table__cell-generation-number" data-title="Status">'.$val['status'].'</td>';
-                            echo '<td class="woocommerce-generations-table__cell woocommerce-generations-table__cell-generation-number" data-title="Action">Nothing</td>';
-                        echo '</tr>';
-                    }
-                echo '</tbody>';
-            echo '</table>';
-            echo '<div class="d-table">';
-                echo '<div class="d-table-cell">';
-                    $data_from = (($limit - 1) * 10) + 1;
-                    $data_to = $data_from + sizeof($data) - 1;
-                    echo 'Showing '.$data_from.' to '.$data_to.' of '. $max.' entries';
-                echo '</div>';
-                echo '<div class="d-table-cell text-right">';
-                    if ($limit>1)
-                        echo '<a class="mos-prev-button mos-button" href="'.remove_query_strings_split($actual_link).'?limit='.($limit - 1).'">Prev</a>';
-                    if ($data_to<$max)
-                        echo '<a class="mos-next-button mos-button" href="'.remove_query_strings_split($actual_link).'?limit='.($limit + 1).'">Next</a>';  
-                echo '</div>';
-            echo '</div>';
-        } else {
-            echo 'No Data Found';
-        }
-        ?>
-	</div>
-	<?php
-}
 add_filter( 'woocommerce_billing_fields', 'email_optional_field');
 
 function email_optional_field( $fields ) {
@@ -248,6 +186,13 @@ function misha_my_account_endpoint_content_wallet_table() {
         echo 'No Data Found';
     }
     echo '<hr style="margin-top:15px">';
+    
+    $msg = @$_GET['msg'];
+    if ($msg == 'et1'){
+        echo '<div class="woocommerce-notices-wrapper"><div class="woocommerce-message alert alert_success" role="alert"><div class="alert_icon"><i class="icon-check"></i></div><div class="alert_wrapper">Request accepted.</div></div>';
+    } elseif ($msg == 'et1' OR $msg == 'et2'){
+        echo '<div class="woocommerce-notices-wrapper"><div class="woocommerce-message alert alert_error" role="alert"><div class="alert_icon"><i class="icon-cancel"></i></div><div class="alert_wrapper">Please try again</div></div>';
+    }
     echo '<h4>Cash Out</h4>';
     if (!$transaction_code) {
         echo '<h5>Please set your transection password first.</h5>';
@@ -257,7 +202,7 @@ function misha_my_account_endpoint_content_wallet_table() {
         echo '<form name="cashoutform" id="cashoutform" action="" method="post">';
             echo '<p><label for="amount">Amount *</label><input type="number" name="amount" id="amount" class="input" placeholde="Amount" size="20" min="100" max="'.$sum.'" required></p>';
             echo '<p><label for="amount">Phone *</label><input type="text" name="phone" id="phone" class="input" placeholde="Amount" size="20" required></p>';
-            echo '<p><label for="transaction_code">Transaction Code *</label><input type="text" name="transaction_code" id="transaction_code" class="input" placeholde="Transaction Code *" size="20" required></p>';
+            echo '<p><label for="transaction_code">Transaction Code *</label><input type="password" name="transaction_code" id="transaction_code" class="input" placeholde="Transaction Code *" size="20" required></p>';
             echo '<p><label for="method">Method *</label><select name="method" class="input"><option>Bkash</option><option>Rocket</option><option>Nagad</option></select></p>';
             echo wp_nonce_field( 'mos_cashout_action', 'mos_cashout_field' );
             echo '<p class="submit"><button type="submit" class="button  button_size_1">Request</button></p>';
