@@ -22,7 +22,7 @@ if ( ! is_ajax() ) {
 }
 ?>
 <div id="payment" class="woocommerce-checkout-payment">
-    <div class="bkask-message">Pay on Bkask or Nagad +8801764-704333.</div>
+    <div class="bkask-message">Pay on bKash or Nagad +8801764-704333.</div>
 	<?php if ( WC()->cart->needs_payment() ) : ?>
 		<ul class="wc_payment_methods payment_methods methods">
 			<?php
