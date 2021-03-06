@@ -254,6 +254,7 @@ function porduct_carousel_func( $atts = array(), $content = '' ) {
 	if ($atts['orderby']) $args['orderby'] = $atts['orderby'];
 	if ($atts['order']) $args['order'] = $atts['order'];
 	if (@$atts['author']) $args['author'] = $atts['author'];
+    $rand = rand(1000,9999); 
     ?>
     <div class="product-carousel-wrap">
     <?php 
@@ -267,7 +268,7 @@ function porduct_carousel_func( $atts = array(), $content = '' ) {
                 <li class="next"><i class="fa fa-angle-right"></i></li>
             </ul>
         </div>
-		<div class="product-carousel-container <?php echo $atts['container_class'] ?>"  data-slick='{"slidesToShow": <?php echo $atts['show'] ?>}'>
+		<div id="product-carousel-<?php echo $rand?>" class="product-carousel-container <?php echo $atts['container_class'] ?>"  data-slick='{"slidesToShow": <?php echo $atts['show'] ?>}'>
         <?php if ($atts['title']) : ?>
         <?php endif?>
 		<?php while ( $query->have_posts() ) : $query->the_post(); 
@@ -308,6 +309,39 @@ function porduct_carousel_func( $atts = array(), $content = '' ) {
     endif;
     ?>
     </div>
+    <script>
+    jQuery(document).ready(function($){
+        $('#product-carousel-<?php echo $rand?>').slick({
+            infinite: true,
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            prevArrow: $('#product-carousel-<?php echo $rand?>').siblings().find('.prev'),
+            nextArrow: $('#product-carousel-<?php echo $rand?>').siblings().find('.next'),
+            autoplay: true,
+            autoplaySpeed: 2000,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                    }
+                }
+            ],
+        });
+    });
+    </script>
     <?php
     $html = ob_get_clean();
     return $html; 

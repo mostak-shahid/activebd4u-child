@@ -177,6 +177,10 @@ Version: 1.0.6
     color: #eb3c70;
     font-size: 30px;
 }
+.product-carousel-container .product .add_to_cart_button {
+    color: #ffffff;
+    background-color: #eb3c70;
+}
 @media screen and (max-width: 768px) {
     .generation-button-group{
         display: block!important;
