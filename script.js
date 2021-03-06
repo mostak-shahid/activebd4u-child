@@ -1,7 +1,11 @@
 jQuery(document).ready(function($){
-    $('#on-sale-products .poroducts').slick({
+    $('.product-carousel-container').slick({
         infinite: true,
-        slidesToShow: 3,
-        slidesToScroll: 3
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        prevArrow: $('.prev'),
+        nextArrow: $('.next'),
+        autoplay: true,
+        autoplaySpeed: 2000,
     });
 });

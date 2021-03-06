@@ -203,3 +203,113 @@ function bbloomer_products_bought_by_curr_user() {
     return $html;
    
 }
+
+function porduct_carousel_func( $atts = array(), $content = '' ) {
+	$html = '';
+    ob_start();
+	$atts = shortcode_atts( array(
+        'title'             => '',
+		'limit'				=> '-1',
+		'offset'			=> 0,
+		'category'			=> '',
+		'tag'				=> '',
+		'orderby'			=> '',
+		'order'				=> '',
+		'container'			=> 0,
+		'container_class'	=> '',
+		'class'				=> '',
+        'show'              => 4,
+	), $atts, 'porduct_carousel' );
+
+	$cat = ($atts['category']) ? preg_replace('/\s+/', '', $atts['category']) : '';
+	$tag = ($atts['tag']) ? preg_replace('/\s+/', '', $atts['tag']) : '';
+
+	$args = array( 
+		'post_type' 		=> 'product',
+		'paged' => get_query_var('paged') ? get_query_var('paged') : 1,
+	);
+	$args['posts_per_page'] = $atts['limit'];
+	if ($atts['offset']) $args['offset'] = $atts['offset'];
+
+	if ($atts['category'] OR $atts['tag']) {
+		$args['tax_query'] = array();
+		if ($atts['category'] AND $atts['tag']) {
+			$args['tax_query']['relation'] = 'OR';
+		}
+		if ($atts['category']) {
+			$args['tax_query'][] = array(
+					'taxonomy' => 'product_cat',
+					'field'    => 'term_id',
+					'terms'    => explode(',', $cat),
+				);
+		}
+		if ($atts['tag']) {
+			$args['tax_query'][] = array(
+					'taxonomy' => 'product_tag',
+					'field'    => 'term_id',
+					'terms'    => explode(',', $tag),
+				);
+		}
+	}
+	if ($atts['orderby']) $args['orderby'] = $atts['orderby'];
+	if ($atts['order']) $args['order'] = $atts['order'];
+	if (@$atts['author']) $args['author'] = $atts['author'];
+    ?>
+    <div class="product-carousel-wrap">
+    <?php 
+	$query = new WP_Query( $args );
+	if ( $query->have_posts() ) :
+        ?>
+        <div class="paginator-center">
+            <h2 class="product-carousel-title"><?php echo $atts['title'] ?></h2>
+            <ul>
+                <li class="prev"><i class="fa fa-angle-left"></i></li>
+                <li class="next"><i class="fa fa-angle-right"></i></li>
+            </ul>
+        </div>
+		<div class="product-carousel-container <?php echo $atts['container_class'] ?>"  data-slick='{"slidesToShow": <?php echo $atts['show'] ?>}'>
+        <?php if ($atts['title']) : ?>
+        <?php endif?>
+		<?php while ( $query->have_posts() ) : $query->the_post(); 
+            $product = wc_get_product( get_the_ID() );
+            ?>
+		    <div <?php post_class( $classes ); ?>>
+		        <div class="wpisset-woo-loop-thumbnail-wrapper">
+                        <a href="http://skyla.lpdthemesdemo.com/product/argan-baby-lotion/" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
+                        <?php if ($product->is_on_sale()) : ?>
+		                    <span class="onsale"><i class="icon-star"></i></span>
+		                <?php endif?>
+		                <img src="<?php echo get_the_post_thumbnail_url(get_the_ID(),'medium') ?>" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" loading="lazy">
+		                </a>
+
+		            <div class="button-rating-wrapper">
+                        <?php if($product->get_average_rating()) : ?>
+		                <div class="star-rating-wrapper">
+		                    <div class="star-rating" role="img" aria-label="Rated <?php echo $product->get_average_rating(); ?> out of 5"><span style="width:80%">Rated <strong class="rating"><?php echo $product->get_average_rating(); ?></strong> out of 5</span></div>
+		                </div>
+		                <?php endif?>
+		                <?php if($product->get_type() == 'variable') : ?>
+		                <a href="<?php echo get_the_permalink() ?>" class="button">Select Item</a>
+		                <?php else : ?>
+		                <a href="?add-to-cart=<?php echo get_the_ID() ?>" data-quantity="1" class="button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="<?php echo get_the_ID() ?>" data-product_sku="123456789-17" aria-label="Add “<?php echo get_the_title() ?>” to your cart" rel="nofollow">Add to cart</a>
+		                <?php endif;?>
+		            </div>
+		        </div>
+		        <div class="wpisset-woo-loop-content-wrapper">
+		            <div class="wpisset-woo-loop-content">
+		                <h4 class="woocommerce-loop-product__title"><?php echo get_the_title() ?></h4>
+		                <?php echo $product->get_price_html(); ?>
+		            </div>
+		        </div>
+		    </div>
+        <?php endwhile; ?>
+		</div><!--/.product-carousel-container-->
+		<?php wp_reset_postdata();
+    endif;
+    ?>
+    </div>
+    <?php
+    $html = ob_get_clean();
+    return $html; 
+}
+add_shortcode( 'porduct_carousel', 'porduct_carousel_func' );
